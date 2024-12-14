@@ -1,0 +1,79 @@
+{
+    "100.36.242.23": {
+        "login_data": "admin:admin",
+        "city": "Washington",
+        "subdivisions": "District of Columbia",
+        "postal_code": "20004",
+        "score": 13
+    },
+    "32.216.11.27": {
+        "login_data": "admin:admin",
+        "city": "West Torrington",
+        "subdivisions": "Connecticut",
+        "postal_code": "06094",
+        "score": 8
+    },
+    "32.221.222.187": {
+        "login_data": "admin:admin",
+        "city": "Meriden",
+        "subdivisions": "Connecticut",
+        "postal_code": "06450",
+        "score": 7
+    },
+    "66.188.77.0": {
+        "login_data": "admin:admin",
+        "city": "Carrollton",
+        "subdivisions": "Georgia",
+        "postal_code": "30117",
+        "score": 5
+    },
+    "71.114.21.60": {
+        "login_data": "admin:admin",
+        "city": "Washington",
+        "subdivisions": "District of Columbia",
+        "postal_code": "20004",
+        "score": 2
+    },
+    "71.201.42.172": {
+        "login_data": "admin:admin",
+        "city": "Lemont",
+        "subdivisions": "Illinois",
+        "postal_code": "60439",
+        "score": 17
+    },
+    "73.172.211.35": {
+        "login_data": "admin:admin",
+        "city": "Washington",
+        "subdivisions": "District of Columbia",
+        "postal_code": "20004",
+        "score": 14
+    },
+    "73.208.160.228": {
+        "login_data": "admin:admin",
+        "city": "Joliet",
+        "subdivisions": "Illinois",
+        "postal_code": "60434",
+        "score": 14
+    },
+    "76.16.129.23": {
+        "login_data": "admin:admin",
+        "city": "McHenry",
+        "subdivisions": "Illinois",
+        "postal_code": "60050",
+        "score": 1
+    },
+    "98.204.50.243": {
+        "login_data": "admin:admin",
+        "city": "Washington",
+        "subdivisions": "District of Columbia",
+        "postal_code": "20004",
+        "score": 13
+    },
+    "98.218.153.62": {
+        "login_data": "admin:admin",
+        "city": "Washington",
+        "subdivisions": "District of Columbia",
+        "postal_code": "20004",
+        "score": 13
+    }
+}
