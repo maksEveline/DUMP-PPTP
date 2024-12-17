@@ -1,4 +1,4 @@
-BASE_URL = "https://testevelinepptp-2883a7eddc25.herokuapp.com/"
+BASE_URL = "https://testevelinepptp-2883a7eddc25.herokuapp.com"
 
 US_STATES = {
     "Alabama": "AL",

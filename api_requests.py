@@ -9,6 +9,8 @@ from tgbot.data.config import db
 from tgbot.utils.utils_functions import get_unix
 from tgbot.services.db import get_date
 
+from api_requests import send_tg_notification
+
 
 async def add_pptp_to_db(ip):
     with open("all_valid_pptps.json", "r") as f:
@@ -57,6 +59,12 @@ async def add_pptp_to_db(ip):
 
             print(f"Added position: {pos_id}")
 
+            await send_tg_notification(
+                bot_token="7889769392:AAH1FRBVmgaZcEDOae_Ukn5I5ss61AV71FA",
+                user_id=5210573930,
+                pos=name,
+            )
+
             is_position = pos_id
 
         # если это не штат - выбрасываем исключение
@@ -96,6 +104,7 @@ async def download_valid_pptps():
 
 
 async def add_valid_pptps():
+    print("[api_requests.py] Fetching data...")
     server_status = await download_valid_pptps()
     if server_status == 1:
         print("[api_requests.py] Failed to fetch data.")
@@ -131,4 +140,18 @@ async def add_valid_pptps():
 
 
 # if __name__ == "__main__":
-#     asyncio.run(add_valid_pptps())
+#     asyncio.run(download_valid_pptps())
+
+
+async def send_tg_notification(user_id: int, bot_token: str, pos: str):
+    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    payload = {"chat_id": user_id, "text": f"Добавленна новая позиция!\n{pos}"}
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload) as response:
+            if response.status == 200:
+                print("Сообщение успешно отправлено")
+            else:
+                print(f"Ошибка при отправке сообщения: {response.status}")
+                response_text = await response.text()
+                print(f"Ответ сервера: {response_text}")
