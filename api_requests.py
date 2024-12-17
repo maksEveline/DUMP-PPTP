@@ -65,7 +65,7 @@ async def add_pptp_to_db(ip):
             return 1
     try:
         state_code = US_STATES[ip_data["subdivisions"]]
-        cat_id = await db.get_category_id_by_name("PPTP USA")
+        cat_id = 1724507371744352329  # await db.get_category_id_by_name("🇺🇸 US PPTP")
         item_data = (
             f"{ip} - {ip_data['login_data']} - {state_code}/{ip_data['postal_code']}"
         )
@@ -130,5 +130,5 @@ async def add_valid_pptps():
         await add_pptp_to_db(ip)
 
 
-if __name__ == "__main__":
-    asyncio.run(add_valid_pptps())
+# if __name__ == "__main__":
+#     asyncio.run(add_valid_pptps())
