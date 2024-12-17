@@ -9,7 +9,19 @@ from tgbot.data.config import db
 from tgbot.utils.utils_functions import get_unix
 from tgbot.services.db import get_date
 
-from api_requests import send_tg_notification
+
+async def send_tg_notification(user_id: int, bot_token: str, pos: str):
+    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+    payload = {"chat_id": user_id, "text": f"Добавленна новая позиция!\n{pos}"}
+
+    async with aiohttp.ClientSession() as session:
+        async with session.post(url, json=payload) as response:
+            if response.status == 200:
+                print("Сообщение успешно отправлено")
+            else:
+                print(f"Ошибка при отправке сообщения: {response.status}")
+                response_text = await response.text()
+                print(f"Ответ сервера: {response_text}")
 
 
 async def add_pptp_to_db(ip):
@@ -141,17 +153,3 @@ async def add_valid_pptps():
 
 # if __name__ == "__main__":
 #     asyncio.run(download_valid_pptps())
-
-
-async def send_tg_notification(user_id: int, bot_token: str, pos: str):
-    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-    payload = {"chat_id": user_id, "text": f"Добавленна новая позиция!\n{pos}"}
-
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, json=payload) as response:
-            if response.status == 200:
-                print("Сообщение успешно отправлено")
-            else:
-                print(f"Ошибка при отправке сообщения: {response.status}")
-                response_text = await response.text()
-                print(f"Ответ сервера: {response_text}")
