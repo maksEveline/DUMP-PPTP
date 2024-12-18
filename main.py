@@ -30,13 +30,14 @@ async def scheduler_start():
     scheduler.add_job(autobackup_db, "cron", hour=00)
     scheduler.add_job(check_updates, "interval", minutes=30)
     scheduler.add_job(check_rates, "cron", hour=00)
-    scheduler.add_job(
-        add_valid_pptps, "interval", minutes=1
-    )  # получение данных с бэкенда и добавление в базу
+    # scheduler.add_job(
+    #     add_valid_pptps, "interval", minutes=1
+    # )  # получение данных с бэкенда и добавление в базу
 
 
 # Выполнение функции после запуска бота
 async def on_startup(dp: Dispatcher):
+    await add_valid_pptps()
     await scheduler_start()
 
     setup_middlewares(dp)

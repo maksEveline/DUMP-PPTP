@@ -44,7 +44,7 @@ async def add_pptp_to_db(ip):
             description = f"{ip_data['subdivisions']} State high quality PPTP"
             photo = "-"
             date = get_date()
-            cat_id = await db.get_category_id_by_name("PPTP USA")
+            cat_id = await db.get_category_id_by_name("🇺🇸 US PPTP")
             _type = "text"
 
             # print(state_code)
@@ -85,7 +85,8 @@ async def add_pptp_to_db(ip):
             return 1
     try:
         state_code = US_STATES[ip_data["subdivisions"]]
-        cat_id = await db.get_category_id_by_name("PPTP USA")
+        cat_id = await db.get_category_id_by_name("🇺🇸 US PPTP")
+        print(f"cat_id: {cat_id}")
         item_data = (
             f"{ip} - {ip_data['login_data']} - {state_code}/{ip_data['postal_code']}"
         )
