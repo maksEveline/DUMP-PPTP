@@ -75,5 +75,124 @@
         "subdivisions": "District of Columbia",
         "postal_code": "20004",
         "score": 13
+    },
+    "76.50.113.63": {
+        "login_data": "admin:admin",
+        "city": "San Fernando",
+        "subdivisions": "California",
+        "postal_code": "91325",
+        "score": 6
+    },
+    "47.186.214.234": {
+        "login_data": "admin:admin",
+        "city": "Denton",
+        "subdivisions": "Texas",
+        "postal_code": "76203",
+        "score": 3
+    },
+    "47.187.131.183": {
+        "login_data": "admin:admin",
+        "city": "Highland Village",
+        "subdivisions": "Texas",
+        "postal_code": "75077",
+        "score": 11
+    },
+    "47.220.142.139": {
+        "login_data": "admin:admin",
+        "city": "Conroe",
+        "subdivisions": "Texas",
+        "postal_code": "77301",
+        "score": 4
+    },
+    "50.26.144.243": {
+        "login_data": "admin:admin",
+        "city": "Amarillo",
+        "subdivisions": "Texas",
+        "postal_code": "79159",
+        "score": 4
+    },
+    "66.68.164.112": {
+        "login_data": "admin:admin",
+        "city": "Arlington",
+        "subdivisions": "Texas",
+        "postal_code": "76015",
+        "score": 5
+    },
+    "76.185.97.132": {
+        "login_data": "admin:admin",
+        "city": "Dallas",
+        "subdivisions": "Texas",
+        "postal_code": "75215",
+        "score": 5
+    },
+    "76.186.69.92": {
+        "login_data": "admin:admin",
+        "city": "Arlington",
+        "subdivisions": "Texas",
+        "postal_code": "76015",
+        "score": 5
+    },
+    "98.41.44.86": {
+        "login_data": "admin:admin",
+        "city": "Fresno",
+        "subdivisions": "California",
+        "postal_code": "93737",
+        "score": 1
+    },
+    "98.56.241.94": {
+        "login_data": "admin:admin",
+        "city": "Sacramento",
+        "subdivisions": "California",
+        "postal_code": "94203",
+        "score": 1
+    },
+    "174.135.122.45": {
+        "login_data": "admin:admin",
+        "city": "Bakersfield",
+        "subdivisions": "California",
+        "postal_code": "93311",
+        "score": 0
+    },
+    "174.160.43.4": {
+        "login_data": "admin:admin",
+        "city": "Fremont",
+        "subdivisions": "California",
+        "postal_code": "94536",
+        "score": 1
+    },
+    "172.117.199.190": {
+        "login_data": "admin:admin",
+        "city": "San Bernardino",
+        "subdivisions": "California",
+        "postal_code": "92405",
+        "score": 5
+    },
+    "206.255.91.105": {
+        "login_data": "admin:password",
+        "city": "Hot Springs",
+        "subdivisions": "Arkansas",
+        "postal_code": "71913",
+        "score": 2
+    },
+    "68.3.67.248": {
+        "login_data": "admin:admin",
+        "city": "Phoenix",
+        "subdivisions": "Arizona",
+        "postal_code": "85001",
+        "score": 1
+    },
+    "70.162.200.123": {
+        "login_data": "admin:admin",
+        "city": "Phoenix",
+        "subdivisions": "Arizona",
+        "postal_code": "85001",
+        "score": 15
+    },
+    "184.103.164.12": {
+        "login_data": "admin:admin",
+        "city": "Chandler",
+        "subdivisions": "Arizona",
+        "postal_code": "85246",
+        "score": 5
     }
 }
