@@ -24,12 +24,20 @@ class Texts:
     ##################################                #####################################
 
     # Фото, оставьте пустым если хотите убрать (прямая ссылка на фото)
-    start_photo = "https://edit.org/photos/img/blog/mbp-template-banner-online-store-free.jpg-840.jpg"
-    profile_photo = "https://i-zdrav.ru/upload/iblock/ca8/ca83b3878fa97ce94bb3ad4c375a80ce.png"
-    products_photo = "https://www.bobrlife.by/wp-content/uploads/2022/04/tovary-v-krizis_0.jpg"
-    faq_photo = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTX817aptpJsuxUeCzjOizmQyc2wwoPdR9CrrZ-a7KQvEdKNAFfnCp6-wwkZUSb5XAIP_U&usqp=CAU"
-    support_photo = "https://www.castcom.ru/netcat_files/114/157/castcom_support.png"
-    refill_photo = "https://info.exmo.me/wp-content/uploads/2021/10/banner_rub-1032x540.png"
+    start_photo = (
+        "https://i.pinimg.com/736x/4b/1f/56/4b1f569542fe133647f3c495191e13bd.jpg"
+    )
+    profile_photo = (
+        "https://i-zdrav.ru/upload/iblock/ca8/ca83b3878fa97ce94bb3ad4c375a80ce.png"
+    )
+    products_photo = (
+        "https://i.pinimg.com/736x/32/26/b8/3226b8f970e693c1c25b963a4f2fcf37.jpg"
+    )
+    faq_photo = (
+        "https://i.pinimg.com/736x/28/a6/12/28a6125000accf422e6eddfa562242aa.jpg"
+    )
+    support_photo = "https://img.freepik.com/free-vector/flat-design-illustration-customer-support_23-2148887720.jpg"
+    refill_photo = "https://cdni.iconscout.com/illustration/premium/thumb/young-man-showing-top-up-balance-on-mobile-illustration-download-in-svg-png-gif-file-formats--bank-digital-wallet-payment-application-pack-business-illustrations-10692820.png?f=webp"
     contest_photo = "https://i.imgur.com/zlblPgk.jpg"
 
     # Стартовый текст
@@ -40,13 +48,13 @@ Main menu:
 
     error_refill = "❌ Error, refill has already occurred!"
     choose_crypto = "<b>⚙️ Select cryptocurrency:</b>"
-    ref_s = ['referral', 'referral', 'referrals']  # не трогать скобки
-    day_s = ['day', 'days', "days"]  # не трогать скобки
+    ref_s = ["referral", "referral", "referrals"]  # не трогать скобки
+    day_s = ["day", "days", "days"]  # не трогать скобки
     member_s = ["member", "members", "members"]  # не трогать скобки
     winner_s = ["winner", "winners", "winners"]  # не трогать скобки
     refill_s = ["refill", "refills", "refills"]  # не трогать скобки
     purchase_s = ["purchase", "purchases", "purchases"]  # не трогать скобки
-    channel_s = ['channel', 'channels', 'channels']  # не трогать скобки
+    channel_s = ["channel", "channels", "channels"]  # не трогать скобки
     conditions = "\n\n<b>❗ Conditions: </b>\n\n"  # не трогать \n\n !!!
     nobody = "<code>Nobody</code>"
     change_language = "🔗 Change language"
@@ -80,15 +88,15 @@ Main menu:
     back = "⬅ Back"
     contest = "🎁 Giveaways"
 
-    payok_text = '🪙 PayOK'
-    cryptoBot_text = '💡 CryptoBot'
+    payok_text = "🪙 PayOK"
+    cryptoBot_text = "💡 CryptoBot"
     qiwi_text = "🔥 Qiwi"
     yoomoney_text = "📌 ЮMoney"
     lava_text = "💰 Lava"
     lzt_text = "💚 Lolz"
     crystalPay_text = "💎 CrystalPay"
     aaio_text = "💳 Bank Card (РФ, УК, КЗ)"
-    aaio_short_text = "Bank Card" # текст должен быть не больше 18 символов!
+    aaio_short_text = "Bank Card"  # текст должен быть не больше 18 символов!
 
     support_inl = "⚙️ Support"
 
@@ -111,8 +119,6 @@ Main menu:
 💵 Total refill: <code>{total_refill}{curr}</code>
 📌 Date of registration: <code>{reg_date}</code>
 👥 Referrals: <code>{ref_count}</code></b>"""
-
-
 
     last_10_purc = "⚙️ Last 10 purchases"
     no_purcs = "❗ You have no purchases"
@@ -241,7 +247,9 @@ Main menu:
 🎲 Date: <code>{buy_time}</code>"""
 
     no_balance = "❗ You don't have enough funds. Top up your balance!"
-    edit_prod = "<b>❗️ The product you wanted to buy is out of stock or has changed.</b>"
+    edit_prod = (
+        "<b>❗️ The product you wanted to buy is out of stock or has changed.</b>"
+    )
     otmena_buy = "<b>❗ You have canceled the purchase of goods.</b>"
 
     #######################                             ###########################
@@ -258,13 +266,13 @@ Main menu:
 🎉 {} {} 
 👥 {} {}</b>"""
 
-    conditions_refills = '<b>💳 {num} {refills} - {status}</b>\n'
-    conditions_purchases = '<b>🛒 {num} {purchases} - {status}</b>\n'
-    conditions_channels = '<b>✨ Subscribe to {num} {channels_text}: \n\n{channels}</b>'
+    conditions_refills = "<b>💳 {num} {refills} - {status}</b>\n"
+    conditions_purchases = "<b>🛒 {num} {purchases} - {status}</b>\n"
+    conditions_channels = "<b>✨ Subscribe to {num} {channels_text}: \n\n{channels}</b>"
 
-    no_contests = '❗ There are no giveaways at the moment!'
+    no_contests = "❗ There are no giveaways at the moment!"
 
-    contest_enter = '🎉 Participate'
+    contest_enter = "🎉 Participate"
 
     choose_contest = "<b>❗ Select a draw:</b>"
     u_win_the_contest = "<b>🎉 Congratulations, you have won the giveaway! \n💰 A prize of {}{} has been awarded!</b>"
@@ -273,9 +281,11 @@ Main menu:
     error = "⚠ An error occurred, try again later!"
     u_already_enter_contest = "❌ You are already participating!"
     contest_already_ended = "💥 The giveaway has already ended!"
-    pcs = 'pcs.'
-    search = '🔎 Search positions'
-    search_request_text = "<b>Enter the name or part of the name of the position to search for!</b>"
-    inf = '[Infinity]'
+    pcs = "pcs."
+    search = "🔎 Search positions"
+    search_request_text = (
+        "<b>Enter the name or part of the name of the position to search for!</b>"
+    )
+    inf = "[Infinity]"
     result_search = "Result of search!"
-    nothing_search = 'Nothing found!'
+    nothing_search = "Nothing found!"

@@ -3,16 +3,44 @@ from aiogram.dispatcher import FSMContext
 from aiogram.types import Message, CallbackQuery
 import time
 from datetime import datetime, timedelta
-from tgbot.keyboards.inline_user import open_products, refill_inl, sub, user_menu, back_to_profile, profile_inl, \
-    back_to_user_menu, chat_inl, news_inl, faq_inl, support_inll, contest_inl, choose_contest, choose_languages_kb
+from tgbot.keyboards.inline_user import (
+    open_products,
+    refill_inl,
+    sub,
+    user_menu,
+    back_to_profile,
+    profile_inl,
+    back_to_user_menu,
+    chat_inl,
+    news_inl,
+    faq_inl,
+    support_inll,
+    contest_inl,
+    choose_contest,
+    choose_languages_kb,
+)
 from tgbot.keyboards.inline_admin import admin_menu
 from tgbot.data.config import db, currencies, lang_ru, lang_ua, lang_en
 from tgbot.data.loader import dp, bot
 from tgbot.utils.other_functions import open_profile, convert_ref
 from contextlib import suppress
-from tgbot.filters.filters import IsAdmin, IsBuy, IsBan, IsSub, IsRefill, IsWork, IsContestOn
+from tgbot.filters.filters import (
+    IsAdmin,
+    IsBuy,
+    IsBan,
+    IsSub,
+    IsRefill,
+    IsWork,
+    IsContestOn,
+)
 from aiogram.utils.exceptions import MessageCantBeDeleted
-from tgbot.utils.utils_functions import convert_words, get_channels, get_language, end_contest, send_admins
+from tgbot.utils.utils_functions import (
+    convert_words,
+    get_channels,
+    get_language,
+    end_contest,
+    send_admins,
+)
 from tgbot.states.users import UsersCoupons
 
 
@@ -86,7 +114,7 @@ async def is_refill(call: CallbackQuery, state: FSMContext):
 
 
 @dp.message_handler(IsRefill(), text=lang_en.refill, state="*")
-@dp.message_handler(IsRefill(), text=lang_ru.refill, state='*')
+@dp.message_handler(IsRefill(), text=lang_ru.refill, state="*")
 @dp.message_handler(IsRefill(), text=lang_ua.refill, state="*")
 async def is_refill(msg: Message, state: FSMContext):
     await state.finish()
@@ -108,189 +136,244 @@ async def is_subs(msg: Message, state: FSMContext):
     await msg.answer(texts.no_sub, reply_markup=sub())
 
 
-@dp.callback_query_handler(text=['subprov'])
+@dp.callback_query_handler(text=["subprov"])
 async def sub_prov(call: CallbackQuery, state: FSMContext):
     await state.finish()
-    if call.message.chat.type == 'private':
+    if call.message.chat.type == "private":
         user = await db.get_user(id=call.from_user.id)
         lang = await get_language(call.from_user.id)
         kb = await user_menu(lang, call.from_user.id)
         if lang.start_photo == "":
             name = f"@{user['user_name']}"
-            if user['user_name'] == "":
-                us = await bot.get_chat(user['id'])
+            if user["user_name"] == "":
+                us = await bot.get_chat(user["id"])
                 name = us.get_mention(as_html=True)
-            await call.message.answer(lang.start_text.format(user_name=name), reply_markup=kb)
+            await call.message.answer(
+                lang.start_text.format(user_name=name), reply_markup=kb
+            )
         else:
             name = f"@{user['user_name']}"
-            if user['user_name'] == "":
-                us = await bot.get_chat(user['id'])
+            if user["user_name"] == "":
+                us = await bot.get_chat(user["id"])
                 name = us.get_mention(as_html=True)
-            await bot.send_photo(chat_id=call.from_user.id, photo=lang.start_photo,
-                                 caption=lang.start_text.format(user_name=name), reply_markup=kb)
+            await bot.send_photo(
+                chat_id=call.from_user.id,
+                photo=lang.start_photo,
+                caption=lang.start_text.format(user_name=name),
+                reply_markup=kb,
+            )
 
 
 #####################################################################################
 #####################################################################################
 #####################################################################################
 
-@dp.message_handler(commands=['start'], state="*")
+
+@dp.message_handler(commands=["start"], state="*")
 async def main_start(message: Message, state: FSMContext):
     await state.finish()
     user = await db.get_user(id=message.from_user.id)
     lang = await get_language(message.from_user.id)
+    print(lang)
     kb = await user_menu(lang, message.from_user.id)
     s = await db.get_settings()
 
-    if s['is_ref'] == 'True':
+    if s["is_ref"] == "True":
         if message.get_args() == "":
             if lang.start_photo == "":
                 name = f"@{user['user_name']}"
-                if user['user_name'] == "":
-                    us = await bot.get_chat(user['id'])
+                if user["user_name"] == "":
+                    us = await bot.get_chat(user["id"])
                     name = us.get_mention(as_html=True)
-                await message.answer(lang.start_text.format(user_name=name), reply_markup=kb)
+                await message.answer(
+                    lang.start_text.format(user_name=name), reply_markup=kb
+                )
             else:
                 name = f"@{user['user_name']}"
-                if user['user_name'] == "":
-                    us = await bot.get_chat(user['id'])
+                if user["user_name"] == "":
+                    us = await bot.get_chat(user["id"])
                     name = us.get_mention(as_html=True)
-                await bot.send_photo(chat_id=message.from_user.id, photo=lang.start_photo,
-                                     caption=lang.start_text.format(user_name=name), reply_markup=kb)
+                await bot.send_photo(
+                    chat_id=message.from_user.id,
+                    photo=lang.start_photo,
+                    caption=lang.start_text.format(user_name=name),
+                    reply_markup=kb,
+                )
         else:
             if await db.get_user(id=int(message.get_args())) is None:
                 if lang.start_photo == "":
                     name = f"@{user['user_name']}"
-                    if user['user_name'] == "":
-                        us = await bot.get_chat(user['id'])
+                    if user["user_name"] == "":
+                        us = await bot.get_chat(user["id"])
                         name = us.get_mention(as_html=True)
-                    await message.answer(lang.start_text.format(user_name=name), reply_markup=kb)
+                    await message.answer(
+                        lang.start_text.format(user_name=name), reply_markup=kb
+                    )
                 else:
                     name = f"@{user['user_name']}"
-                    if user['user_name'] == "":
-                        us = await bot.get_chat(user['id'])
+                    if user["user_name"] == "":
+                        us = await bot.get_chat(user["id"])
                         name = us.get_mention(as_html=True)
-                    await bot.send_photo(chat_id=message.from_user.id, photo=lang.start_photo,
-                                         caption=lang.start_text.format(user_name=name), reply_markup=kb)
+                    await bot.send_photo(
+                        chat_id=message.from_user.id,
+                        photo=lang.start_photo,
+                        caption=lang.start_text.format(user_name=name),
+                        reply_markup=kb,
+                    )
             else:
-                if user['ref_id'] is not None:
+                if user["ref_id"] is not None:
                     await message.answer(lang.yes_reffer)
                 else:
                     reffer = await db.get_user(id=int(message.get_args()))
-                    if reffer['id'] == message.from_user.id:
+                    if reffer["id"] == message.from_user.id:
                         await message.answer(lang.invite_yourself)
                     else:
                         user_ref_count = reffer.ref_count
-                        msg = lang.new_refferal.format(user_name=user['user_name'],
-                                                       user_ref_count=user_ref_count + 1,
-                                                       convert_ref=convert_ref(lang, user_ref_count + 1))
+                        msg = lang.new_refferal.format(
+                            user_name=user["user_name"],
+                            user_ref_count=user_ref_count + 1,
+                            convert_ref=convert_ref(lang, user_ref_count + 1),
+                        )
 
-                        await db.update_user(message.from_user.id, ref_id=reffer['id'],
-                                             ref_user_name=reffer['user_name'], ref_first_name=reffer['first_name'])
-                        await db.update_user(reffer['id'], ref_count=user_ref_count + 1)
+                        await db.update_user(
+                            message.from_user.id,
+                            ref_id=reffer["id"],
+                            ref_user_name=reffer["user_name"],
+                            ref_first_name=reffer["first_name"],
+                        )
+                        await db.update_user(reffer["id"], ref_count=user_ref_count + 1)
 
-                        await bot.send_message(chat_id=reffer['id'], text=msg)
+                        await bot.send_message(chat_id=reffer["id"], text=msg)
 
-                        if reffer['ref_count'] + 1 == s['ref_lvl_1']:
-                            remain_refs = s['ref_lvl_2'] - (reffer['ref_count'] + 1)
-                            text = lang.new_ref_lvl.format(new_lvl=1, next_lvl=2, remain_refs=remain_refs,
-                                                           convert_ref=convert_ref(lang, remain_refs))
-                            await bot.send_message(chat_id=reffer['id'], text=text)
-                            await db.update_user(reffer['id'], ref_lvl=1)
-                        elif reffer['ref_count'] + 1 == s['ref_lvl_2']:
-                            remain_refs = s['ref_lvl_3'] - (reffer['ref_count'] + 1)
-                            text = lang.new_ref_lvl.format(new_lvl=2, next_lvl=3, remain_refs=remain_refs,
-                                                           convert_ref=convert_ref(lang, remain_refs))
-                            await bot.send_message(chat_id=reffer['id'],
-                                                   text=text)
-                            await db.update_user(reffer['id'], ref_lvl=2)
-                        elif reffer['ref_count'] + 1 == s['ref_lvl_3']:
-                            await bot.send_message(chat_id=reffer['id'],
-                                                   text=lang.max_ref_lvl)
-                            await db.update_user(reffer['id'], ref_lvl=3)
+                        if reffer["ref_count"] + 1 == s["ref_lvl_1"]:
+                            remain_refs = s["ref_lvl_2"] - (reffer["ref_count"] + 1)
+                            text = lang.new_ref_lvl.format(
+                                new_lvl=1,
+                                next_lvl=2,
+                                remain_refs=remain_refs,
+                                convert_ref=convert_ref(lang, remain_refs),
+                            )
+                            await bot.send_message(chat_id=reffer["id"], text=text)
+                            await db.update_user(reffer["id"], ref_lvl=1)
+                        elif reffer["ref_count"] + 1 == s["ref_lvl_2"]:
+                            remain_refs = s["ref_lvl_3"] - (reffer["ref_count"] + 1)
+                            text = lang.new_ref_lvl.format(
+                                new_lvl=2,
+                                next_lvl=3,
+                                remain_refs=remain_refs,
+                                convert_ref=convert_ref(lang, remain_refs),
+                            )
+                            await bot.send_message(chat_id=reffer["id"], text=text)
+                            await db.update_user(reffer["id"], ref_lvl=2)
+                        elif reffer["ref_count"] + 1 == s["ref_lvl_3"]:
+                            await bot.send_message(
+                                chat_id=reffer["id"], text=lang.max_ref_lvl
+                            )
+                            await db.update_user(reffer["id"], ref_lvl=3)
 
                         if lang.start_photo == "":
                             name = f"@{user['user_name']}"
-                            if user['user_name'] == "":
-                                us = await bot.get_chat(user['id'])
+                            if user["user_name"] == "":
+                                us = await bot.get_chat(user["id"])
                                 name = us.get_mention(as_html=True)
-                            await message.answer(lang.start_text.format(user_name=name), reply_markup=kb)
+                            await message.answer(
+                                lang.start_text.format(user_name=name), reply_markup=kb
+                            )
                         else:
                             name = f"@{user['user_name']}"
-                            if user['user_name'] == "":
-                                us = await bot.get_chat(user['id'])
+                            if user["user_name"] == "":
+                                us = await bot.get_chat(user["id"])
                                 name = us.get_mention(as_html=True)
-                            await bot.send_photo(chat_id=message.from_user.id, photo=lang.start_photo,
-                                                 caption=lang.start_text.format(user_name=name), reply_markup=kb)
+                            await bot.send_photo(
+                                chat_id=message.from_user.id,
+                                photo=lang.start_photo,
+                                caption=lang.start_text.format(user_name=name),
+                                reply_markup=kb,
+                            )
     else:
         if lang.start_photo == "":
             name = f"@{user['user_name']}"
-            if user['user_name'] == "":
-                us = await bot.get_chat(user['id'])
+            if user["user_name"] == "":
+                us = await bot.get_chat(user["id"])
                 name = us.get_mention(as_html=True)
-            await message.answer(lang.start_text.format(user_name=name), reply_markup=kb)
+            await message.answer(
+                lang.start_text.format(user_name=name), reply_markup=kb
+            )
         else:
             name = f"@{user['user_name']}"
-            if user['user_name'] == "":
-                us = await bot.get_chat(user['id'])
+            if user["user_name"] == "":
+                us = await bot.get_chat(user["id"])
                 name = us.get_mention(as_html=True)
-            await bot.send_photo(chat_id=message.from_user.id, photo=lang.start_photo,
-                                 caption=lang.start_text.format(user_name=name), reply_markup=kb)
+            await bot.send_photo(
+                chat_id=message.from_user.id,
+                photo=lang.start_photo,
+                caption=lang.start_text.format(user_name=name),
+                reply_markup=kb,
+            )
 
 
-@dp.callback_query_handler(text="ref_system", state='*')
+@dp.callback_query_handler(text="ref_system", state="*")
 async def ref_systemm(call: CallbackQuery, state: FSMContext):
     await state.finish()
     s = await db.get_settings()
-    status = s['is_ref']
+    status = s["is_ref"]
     bott = await bot.get_me()
     bot_name = bott.username
     ref_link = f"<code>https://t.me/{bot_name}?start={call.from_user.id}</code>"
     user = await db.get_user(id=call.from_user.id)
     texts = await get_language(call.from_user.id)
-    ref_earn_rub = user['ref_earn_rub']
-    ref_earn_euro = user['ref_earn_euro']
-    ref_earn_dollar = user['ref_earn_dollar']
+    ref_earn_rub = user["ref_earn_rub"]
+    ref_earn_euro = user["ref_earn_euro"]
+    ref_earn_dollar = user["ref_earn_dollar"]
 
-    if s['currency'] == 'rub':
+    if s["currency"] == "rub":
         ref_earn = ref_earn_rub
-    elif s['currency'] == 'usd':
+    elif s["currency"] == "usd":
         ref_earn = ref_earn_dollar
-    elif s['currency'] == 'eur':
+    elif s["currency"] == "eur":
         ref_earn = ref_earn_euro
 
-    ref_count = user['ref_count']
-    ref_lvl = user['ref_lvl']
+    ref_count = user["ref_count"]
+    ref_lvl = user["ref_lvl"]
     if ref_lvl == 0:
         lvl = 1
-        ref_percent = s['ref_percent_1']
+        ref_percent = s["ref_percent_1"]
     if ref_lvl == 1:
         lvl = 2
-        ref_percent = s['ref_percent_1']
+        ref_percent = s["ref_percent_1"]
     elif ref_lvl == 2:
         lvl = 3
-        ref_percent = s['ref_percent_2']
+        ref_percent = s["ref_percent_2"]
     elif ref_lvl == 3:
         lvl = 3
-        ref_percent = s['ref_percent_3']
+        ref_percent = s["ref_percent_3"]
 
-    remain_refs = s[f'ref_lvl_{lvl}'] - user['ref_count']
+    remain_refs = s[f"ref_lvl_{lvl}"] - user["ref_count"]
 
     if ref_lvl == 3:
         mss = texts.cur_max_lvl
     else:
         mss = texts.next_lvl_remain.format(remain_refs=remain_refs)
 
-    reffer_name = user['ref_first_name']
+    reffer_name = user["ref_first_name"]
     if reffer_name is None:
         reffer = texts.nobody
     else:
         reffer = f"<a href='tg://user?id={user['ref_id']}'>{reffer_name}</a>"
 
-    curr = currencies[s['currency']]['sign']
+    curr = currencies[s["currency"]]["sign"]
 
-    msg = texts.ref_text.format(ref_link=ref_link, ref_percent=ref_percent, reffer=reffer, ref_earn=ref_earn, curr=curr,
-                                convert_ref=convert_ref(texts, ref_count), ref_count=ref_count, ref_lvl=ref_lvl, mss=mss)
+    msg = texts.ref_text.format(
+        ref_link=ref_link,
+        ref_percent=ref_percent,
+        reffer=reffer,
+        ref_earn=ref_earn,
+        curr=curr,
+        convert_ref=convert_ref(texts, ref_count),
+        ref_count=ref_count,
+        ref_lvl=ref_lvl,
+        mss=mss,
+    )
 
     if status == "True":
         await call.message.delete()
@@ -300,12 +383,14 @@ async def ref_systemm(call: CallbackQuery, state: FSMContext):
 
 
 # Переключение языка
-@dp.callback_query_handler(text='change_language', state="*")
+@dp.callback_query_handler(text="change_language", state="*")
 async def change_language(call: CallbackQuery, state: FSMContext):
     await state.finish()
     texts = await get_language(call.from_user.id)
     await call.message.delete()
-    await call.message.answer(texts.choose_language, reply_markup=await choose_languages_kb())
+    await call.message.answer(
+        texts.choose_language, reply_markup=await choose_languages_kb()
+    )
 
 
 @dp.callback_query_handler(text_startswith="change_language:", state="*")
@@ -320,17 +405,23 @@ async def change_language_(call: CallbackQuery, state: FSMContext):
     kb = await user_menu(texts, call.from_user.id)
     if texts.start_photo == "":
         name = f"@{user['user_name']}"
-        if user['user_name'] == "":
-            us = await bot.get_chat(user['id'])
+        if user["user_name"] == "":
+            us = await bot.get_chat(user["id"])
             name = us.get_mention(as_html=True)
-        await call.message.answer(texts.start_text.format(user_name=name), reply_markup=kb)
+        await call.message.answer(
+            texts.start_text.format(user_name=name), reply_markup=kb
+        )
     else:
         name = f"@{user['user_name']}"
-        if user['user_name'] == "":
-            us = await bot.get_chat(user['id'])
+        if user["user_name"] == "":
+            us = await bot.get_chat(user["id"])
             name = us.get_mention(as_html=True)
-        await bot.send_photo(chat_id=call.from_user.id, photo=texts.start_photo,
-                             caption=texts.start_text.format(user_name=name), reply_markup=kb)
+        await bot.send_photo(
+            chat_id=call.from_user.id,
+            photo=texts.start_photo,
+            caption=texts.start_text.format(user_name=name),
+            reply_markup=kb,
+        )
 
 
 # Просмотр истории покупок
@@ -345,23 +436,30 @@ async def user_history(call: CallbackQuery, state: FSMContext):
         with suppress(MessageCantBeDeleted):
             await call.message.delete()
             for purchases in purchasess:
-                link_items = purchases['item']
+                link_items = purchases["item"]
 
-                if s['currency'] == "rub":
-                    price = purchases['price_rub']
-                elif s['currency'] == "eur":
-                    price = purchases['price_euro']
-                elif s['currency'] == "usd":
-                    price = purchases['price_dollar']
+                if s["currency"] == "rub":
+                    price = purchases["price_rub"]
+                elif s["currency"] == "eur":
+                    price = purchases["price_euro"]
+                elif s["currency"] == "usd":
+                    price = purchases["price_dollar"]
 
-                msg = texts.last_purc_text.format(receipt=purchases['receipt'], name=purchases['position_name'],
-                                                  count=purchases['count'], price=price,
-                                                  curr=currencies[s['currency']]['sign'],
-                                                  date=purchases['date'], link_items=link_items)
+                msg = texts.last_purc_text.format(
+                    receipt=purchases["receipt"],
+                    name=purchases["position_name"],
+                    count=purchases["count"],
+                    price=price,
+                    curr=currencies[s["currency"]]["sign"],
+                    date=purchases["date"],
+                    link_items=link_items,
+                )
 
                 await call.message.answer(msg)
 
-        await call.message.answer(await open_profile(texts, call), reply_markup=await profile_inl(texts))
+        await call.message.answer(
+            await open_profile(texts, call), reply_markup=await profile_inl(texts)
+        )
     else:
         await call.answer(texts.no_purcs, True)
 
@@ -396,24 +494,32 @@ async def functions_profile_get(message: Message, state: FSMContext):
             await message.answer(texts.no_uses_coupon)
             await db.delete_coupon(coupon=coupon)
         elif activ_cop is None:
-            bal_eur = user['balance_euro'] + float(discount_eur)
-            bal_usd = user['balance_dollar'] + float(discount_usd)
-            bal_rub = user['balance_rub'] + float(discount_rub)
+            bal_eur = user["balance_euro"] + float(discount_eur)
+            bal_usd = user["balance_dollar"] + float(discount_usd)
+            bal_rub = user["balance_rub"] + float(discount_rub)
             main_discount = 0
 
-            if s['currency'] == "rub":
+            if s["currency"] == "rub":
                 main_discount = discount_rub
-            elif s['currency'] == 'eur':
+            elif s["currency"] == "eur":
                 main_discount = discount_eur
-            elif s['currency'] == 'usd':
+            elif s["currency"] == "usd":
                 main_discount = discount_usd
 
-            await db.update_user(user_id, balance_rub=bal_rub, balance_euro=bal_eur, balance_dollar=bal_usd)
+            await db.update_user(
+                user_id,
+                balance_rub=bal_rub,
+                balance_euro=bal_eur,
+                balance_dollar=bal_usd,
+            )
             await db.update_coupon(coupon, uses=int(uses) - 1)
             await db.add_activ_coupon(user_id)
             await db.activate_coupon(user_id=user_id, coupon=coupon)
-            await message.answer(texts.yes_coupon.format(discount=main_discount,
-                                                         curr=currencies[s['currency']]['sign']))
+            await message.answer(
+                texts.yes_coupon.format(
+                    discount=main_discount, curr=currencies[s["currency"]]["sign"]
+                )
+            )
         elif activ_cop["coupon_name"] == cop:
             await message.answer(texts.yes_uses_coupon)
 
@@ -426,17 +532,23 @@ async def again_start(call: CallbackQuery, state: FSMContext):
     kb = await user_menu(texts, call.from_user.id)
     if texts.start_photo == "":
         name = f"@{user['user_name']}"
-        if user['user_name'] == "":
-            us = await bot.get_chat(user['id'])
+        if user["user_name"] == "":
+            us = await bot.get_chat(user["id"])
             name = us.get_mention(as_html=True)
-        await call.message.answer(texts.start_text.format(user_name=name), reply_markup=kb)
+        await call.message.answer(
+            texts.start_text.format(user_name=name), reply_markup=kb
+        )
     else:
         name = f"@{user['user_name']}"
-        if user['user_name'] == "":
-            us = await bot.get_chat(user['id'])
+        if user["user_name"] == "":
+            us = await bot.get_chat(user["id"])
             name = us.get_mention(as_html=True)
-        await bot.send_photo(chat_id=call.from_user.id, photo=texts.start_photo,
-                             caption=texts.start_text.format(user_name=name), reply_markup=kb)
+        await bot.send_photo(
+            chat_id=call.from_user.id,
+            photo=texts.start_photo,
+            caption=texts.start_text.format(user_name=name),
+            reply_markup=kb,
+        )
 
 
 @dp.callback_query_handler(text="profile", state="*")
@@ -448,7 +560,11 @@ async def profile_open(call: CallbackQuery, state: FSMContext):
     await call.message.delete()
 
     if texts.profile_photo:
-        await call.message.answer_photo(photo=texts.profile_photo, caption=msg, reply_markup=await profile_inl(texts))
+        await call.message.answer_photo(
+            photo=texts.profile_photo,
+            caption=msg,
+            reply_markup=await profile_inl(texts),
+        )
     else:
         await call.message.answer(msg, reply_markup=await profile_inl(texts))
 
@@ -464,7 +580,11 @@ async def profile_opens(message: Message, state: FSMContext):
     await message.delete()
 
     if texts.profile_photo:
-        await message.answer_photo(photo=texts.profile_photo, caption=msg, reply_markup=await profile_inl(texts))
+        await message.answer_photo(
+            photo=texts.profile_photo,
+            caption=msg,
+            reply_markup=await profile_inl(texts),
+        )
     else:
         await message.answer(msg, reply_markup=await profile_inl(texts))
 
@@ -474,16 +594,16 @@ async def faq_open(call: CallbackQuery, state: FSMContext):
     await state.finish()
     s = await db.get_settings()
     texts = await get_language(call.from_user.id)
-    faq = s['faq']
+    faq = s["faq"]
     if faq == "None" or faq == "-":
         faq = texts.no_faq_text
-    news = s['news']
-    chat = s['chat']
+    news = s["news"]
+    chat = s["chat"]
 
-    if s['chat'] == "-":
+    if s["chat"] == "-":
         chat = None
 
-    if s['news'] == "-":
+    if s["news"] == "-":
         news = None
 
     if news is None and chat is None:
@@ -498,7 +618,9 @@ async def faq_open(call: CallbackQuery, state: FSMContext):
     await call.message.delete()
 
     if texts.faq_photo:
-        await call.message.answer_photo(photo=texts.faq_photo, caption=faq, reply_markup=kb)
+        await call.message.answer_photo(
+            photo=texts.faq_photo, caption=faq, reply_markup=kb
+        )
     else:
         await call.message.answer(faq, reply_markup=kb)
 
@@ -508,7 +630,7 @@ async def faq_open(call: CallbackQuery, state: FSMContext):
     await state.finish()
     s = await db.get_settings()
     texts = await get_language(call.from_user.id)
-    get_support = s['support']
+    get_support = s["support"]
     if get_support == "None" or get_support == "-":
         msg = texts.no_support
     else:
@@ -522,12 +644,14 @@ async def faq_open(call: CallbackQuery, state: FSMContext):
     await call.message.delete()
 
     if texts.support_photo:
-        await call.message.answer_photo(photo=texts.support_photo, caption=msg, reply_markup=kb)
+        await call.message.answer_photo(
+            photo=texts.support_photo, caption=msg, reply_markup=kb
+        )
     else:
         await call.message.answer(msg, reply_markup=kb)
 
 
-@dp.callback_query_handler(text="contests", state='*')
+@dp.callback_query_handler(text="contests", state="*")
 async def contests_view_user(call: CallbackQuery, state: FSMContext):
     await state.finish()
     user = await db.get_user(id=call.from_user.id)
@@ -535,11 +659,13 @@ async def contests_view_user(call: CallbackQuery, state: FSMContext):
     contests = await db.get_contests()
     if len(contests) > 1:
         await call.message.delete()
-        await call.message.answer(text=texts.choose_contest, reply_markup=await choose_contest(contests))
+        await call.message.answer(
+            text=texts.choose_contest, reply_markup=await choose_contest(contests)
+        )
     elif len(contests) == 1:
         await call.message.delete()
         bot_settings = await db.get_settings()
-        a = (contests[0]['end_time'] - time.time())
+        a = contests[0]["end_time"] - time.time()
         a1 = datetime.today()
         a2 = a1 + timedelta(seconds=a)
         end_time_ = a2 - a1
@@ -552,55 +678,72 @@ async def contests_view_user(call: CallbackQuery, state: FSMContext):
         else:
             end_time = f"{end_time.split(', ')[0]}"
 
-        text = texts.contest_text.format(contests[0]['prize'], currencies[bot_settings["currency"]]["sign"],
-                                         end_time, contests[0]['winners_num'],
-                                         convert_words(contests[0]["winners_num"],
-                                                       texts.winner_s),
-                                         contests[0]['members_num'], convert_words(contests[0]["members_num"],
-                                                                                   texts.member_s))
+        text = texts.contest_text.format(
+            contests[0]["prize"],
+            currencies[bot_settings["currency"]]["sign"],
+            end_time,
+            contests[0]["winners_num"],
+            convert_words(contests[0]["winners_num"], texts.winner_s),
+            contests[0]["members_num"],
+            convert_words(contests[0]["members_num"], texts.member_s),
+        )
 
-        if contests[0]['purchases_num'] > 0 or contests[0]['refills_num'] > 0:
+        if contests[0]["purchases_num"] > 0 or contests[0]["refills_num"] > 0:
             text += texts.conditions
 
-        status = '❌'
+        status = "❌"
 
-        if contests[0]['refills_num'] > 0:
-            if user['count_refills'] >= contests[0]['refills_num']:
-                status = '✅'
-            text += texts.conditions_refills.format(num=contests[0]['refills_num'],
-                                                    refills=convert_words(contests[0]["refills_num"],
-                                                                          texts.refill_s),
-                                                    status=status)
+        if contests[0]["refills_num"] > 0:
+            if user["count_refills"] >= contests[0]["refills_num"]:
+                status = "✅"
+            text += texts.conditions_refills.format(
+                num=contests[0]["refills_num"],
+                refills=convert_words(contests[0]["refills_num"], texts.refill_s),
+                status=status,
+            )
 
-        if contests[0]['purchases_num'] > 0:
-            if len(await db.get_user_purchases(user['id'])) >= contests[0]['purchases_num']:
-                status = '✅'
-            text += texts.conditions_purchases.format(num=contests[0]['purchases_num'],
-                                                      purchases=convert_words(contests[0]["purchases_num"],
-                                                                              texts.purchase_s),
-                                                      status=status)
-        if len(get_channels(contests[0]['channels_ids'])) > 0:
-            urls_txt = ''
-            ids = get_channels(contests[0]['channels_ids'])
+        if contests[0]["purchases_num"] > 0:
+            if (
+                len(await db.get_user_purchases(user["id"]))
+                >= contests[0]["purchases_num"]
+            ):
+                status = "✅"
+            text += texts.conditions_purchases.format(
+                num=contests[0]["purchases_num"],
+                purchases=convert_words(contests[0]["purchases_num"], texts.purchase_s),
+                status=status,
+            )
+        if len(get_channels(contests[0]["channels_ids"])) > 0:
+            urls_txt = ""
+            ids = get_channels(contests[0]["channels_ids"])
 
             for c_id in ids:
-                user_status = await bot.get_chat_member(chat_id=c_id, user_id=call.from_user.id)
+                user_status = await bot.get_chat_member(
+                    chat_id=c_id, user_id=call.from_user.id
+                )
                 channel = await bot.get_chat(chat_id=c_id)
-                if user_status["status"] == 'left':
+                if user_status["status"] == "left":
                     urls_txt += f"<a href='{channel['invite_link']}'>{channel['title']}</a> - ❌\n"
                 else:
                     urls_txt += f"<a href='{channel['invite_link']}'>{channel['title']}</a> - ✅\n"
 
-            text += "\n\n" + texts.conditions_channels.format(num=len(get_channels(contests[0]['channels_ids'])),
-                                                          channels_text=convert_words(
-                                                              len(get_channels(contests[0]['channels_ids'])),
-                                                              texts.channel_s
-                                                          ), channels=urls_txt)
-        if texts.contest_photo == '':
-            await call.message.answer(text, reply_markup=await contest_inl(texts, contests[0]['id'], user))
+            text += "\n\n" + texts.conditions_channels.format(
+                num=len(get_channels(contests[0]["channels_ids"])),
+                channels_text=convert_words(
+                    len(get_channels(contests[0]["channels_ids"])), texts.channel_s
+                ),
+                channels=urls_txt,
+            )
+        if texts.contest_photo == "":
+            await call.message.answer(
+                text, reply_markup=await contest_inl(texts, contests[0]["id"], user)
+            )
         else:
-            await call.message.answer_photo(photo=texts.contest_photo, caption=text,
-                                   reply_markup=await contest_inl(texts, contests[0]['id'], user))
+            await call.message.answer_photo(
+                photo=texts.contest_photo,
+                caption=text,
+                reply_markup=await contest_inl(texts, contests[0]["id"], user),
+            )
     else:
         await call.answer(texts.no_contests, True)
 
@@ -614,10 +757,12 @@ async def contest_user(msg: Message, state: FSMContext):
     texts = await get_language(msg.from_user.id)
     contests = await db.get_contests()
     if len(contests) > 1:
-        await msg.answer(text=texts.choose_contest, reply_markup=await choose_contest(contests))
+        await msg.answer(
+            text=texts.choose_contest, reply_markup=await choose_contest(contests)
+        )
     elif len(contests) == 1:
         bot_settings = await db.get_settings()
-        a = (contests[0]['end_time'] - time.time())
+        a = contests[0]["end_time"] - time.time()
         a1 = datetime.today()
         a2 = a1 + timedelta(seconds=a)
         end_time_ = a2 - a1
@@ -630,55 +775,72 @@ async def contest_user(msg: Message, state: FSMContext):
         else:
             end_time = f"{end_time.split(', ')[0]}"
 
-        text = texts.contest_text.format(contests[0]['prize'], currencies[bot_settings["currency"]]["sign"],
-                                         end_time, contests[0]['winners_num'],
-                                         convert_words(contests[0]["winners_num"],
-                                                       texts.winner_s),
-                                         contests[0]['members_num'], convert_words(contests[0]["members_num"],
-                                                                                   texts.member_s))
+        text = texts.contest_text.format(
+            contests[0]["prize"],
+            currencies[bot_settings["currency"]]["sign"],
+            end_time,
+            contests[0]["winners_num"],
+            convert_words(contests[0]["winners_num"], texts.winner_s),
+            contests[0]["members_num"],
+            convert_words(contests[0]["members_num"], texts.member_s),
+        )
 
-        if contests[0]['purchases_num'] > 0 or contests[0]['refills_num'] > 0:
+        if contests[0]["purchases_num"] > 0 or contests[0]["refills_num"] > 0:
             text += texts.conditions
 
-        status = '❌'
+        status = "❌"
 
-        if contests[0]['refills_num'] > 0:
-            if user['count_refills'] >= contests[0]['refills_num']:
-                status = '✅'
-            text += texts.conditions_refills.format(num=contests[0]['refills_num'],
-                                                    refills=convert_words(contests[0]["refills_num"],
-                                                                          texts.refill_s),
-                                                    status=status)
+        if contests[0]["refills_num"] > 0:
+            if user["count_refills"] >= contests[0]["refills_num"]:
+                status = "✅"
+            text += texts.conditions_refills.format(
+                num=contests[0]["refills_num"],
+                refills=convert_words(contests[0]["refills_num"], texts.refill_s),
+                status=status,
+            )
 
-        if contests[0]['purchases_num'] > 0:
-            if len(await db.get_user_purchases(user['id'])) >= contests[0]['purchases_num']:
-                status = '✅'
-            text += texts.conditions_purchases.format(num=contests[0]['purchases_num'],
-                                                      purchases=convert_words(contests[0]["purchases_num"],
-                                                                              texts.purchase_s),
-                                                      status=status)
-        if len(get_channels(contests[0]['channels_ids'])) > 0:
-            urls_txt = ''
-            ids = get_channels(contests[0]['channels_ids'])
+        if contests[0]["purchases_num"] > 0:
+            if (
+                len(await db.get_user_purchases(user["id"]))
+                >= contests[0]["purchases_num"]
+            ):
+                status = "✅"
+            text += texts.conditions_purchases.format(
+                num=contests[0]["purchases_num"],
+                purchases=convert_words(contests[0]["purchases_num"], texts.purchase_s),
+                status=status,
+            )
+        if len(get_channels(contests[0]["channels_ids"])) > 0:
+            urls_txt = ""
+            ids = get_channels(contests[0]["channels_ids"])
 
             for c_id in ids:
-                user_status = await bot.get_chat_member(chat_id=c_id, user_id=msg.from_user.id)
+                user_status = await bot.get_chat_member(
+                    chat_id=c_id, user_id=msg.from_user.id
+                )
                 channel = await bot.get_chat(chat_id=c_id)
-                if user_status["status"] == 'left':
+                if user_status["status"] == "left":
                     urls_txt += f"<a href='{channel['invite_link']}'>{channel['title']}</a> - ❌\n"
                 else:
                     urls_txt += f"<a href='{channel['invite_link']}'>{channel['title']}</a> - ✅\n"
 
-            text += "\n\n" + texts.conditions_channels.format(num=len(get_channels(contests[0]['channels_ids'])),
-                                                channels_text=convert_words(
-                                                    len(get_channels(contests[0]['channels_ids'])),
-                                                    texts.channel_s
-                                                ), channels=urls_txt)
-        if texts.contest_photo == '':
-            await msg.answer(text, reply_markup=await contest_inl(texts, contests[0]['id'], user))
+            text += "\n\n" + texts.conditions_channels.format(
+                num=len(get_channels(contests[0]["channels_ids"])),
+                channels_text=convert_words(
+                    len(get_channels(contests[0]["channels_ids"])), texts.channel_s
+                ),
+                channels=urls_txt,
+            )
+        if texts.contest_photo == "":
+            await msg.answer(
+                text, reply_markup=await contest_inl(texts, contests[0]["id"], user)
+            )
         else:
-            await msg.answer_photo(photo=texts.contest_photo, caption=text,
-                                   reply_markup=await contest_inl(texts, contests[0]['id'], user))
+            await msg.answer_photo(
+                photo=texts.contest_photo,
+                caption=text,
+                reply_markup=await contest_inl(texts, contests[0]["id"], user),
+            )
     else:
         await msg.reply(f"<b>{texts.no_contests}</b>")
 
@@ -690,12 +852,12 @@ async def contest_enter(call: CallbackQuery, state: FSMContext):
     contest_id = int(call.data.split(":")[1])
     contest_members = await db.get_contest_members_id(contest_id)
     settings = await db.get_settings()
-    cur = currencies[settings['currency']]['sign']
+    cur = currencies[settings["currency"]]["sign"]
     contest = await db.get_contest(contest_id)
     texts = await get_language(call.from_user.id)
 
     if contest:
-        if len(contest_members) == contest['members_num']:
+        if len(contest_members) == contest["members_num"]:
             if call.from_user.id not in contest_members:
                 await call.answer(texts.u_didnt_have_time_to_enter_contest, True)
             return await end_contest(contest_id)
@@ -708,7 +870,7 @@ async def contest_enter(call: CallbackQuery, state: FSMContext):
                 await send_admins(msg, True)
                 await call.answer(texts.success, True)
             contest_members_new = await db.get_contest_members_id(contest_id)
-            if len(contest_members_new) == contest['members_num']:
+            if len(contest_members_new) == contest["members_num"]:
                 return await end_contest(contest_id)
             else:
                 await call.answer(texts.error, True)
@@ -727,7 +889,7 @@ async def contest_view(call: CallbackQuery, state: FSMContext):
     contest_id = call.data.split(":")[1]
     contest = await db.get_contest(contest_id)
     bot_settings = await db.get_settings()
-    a = (contest['end_time'] - time.time())
+    a = contest["end_time"] - time.time()
     a1 = datetime.today()
     a2 = a1 + timedelta(seconds=a)
     end_time_ = a2 - a1
@@ -740,65 +902,88 @@ async def contest_view(call: CallbackQuery, state: FSMContext):
     else:
         end_time = f"{end_time.split(', ')[0]}"
 
-    text = texts.contest_text.format(contest['prize'], currencies[bot_settings["currency"]]["sign"],
-                                     end_time, contest['winners_num'],
-                                     convert_words(contest["winners_num"],
-                                                   texts.winner_s),
-                                     contest['members_num'], convert_words(contest["members_num"],
-                                                                           texts.member_s))
+    text = texts.contest_text.format(
+        contest["prize"],
+        currencies[bot_settings["currency"]]["sign"],
+        end_time,
+        contest["winners_num"],
+        convert_words(contest["winners_num"], texts.winner_s),
+        contest["members_num"],
+        convert_words(contest["members_num"], texts.member_s),
+    )
 
-    if contest['purchases_num'] > 0 or contest['refills_num'] > 0:
+    if contest["purchases_num"] > 0 or contest["refills_num"] > 0:
         text += texts.conditions
 
-    status = '❌'
+    status = "❌"
 
-    if contest['refills_num'] > 0:
-        if user['count_refills'] >= contest['refills_num']:
-            status = '✅'
-        text += texts.conditions_refills.format(num=contest['refills_num'],
-                                                refills=convert_words(contest["refills_num"],
-                                                                      texts.refill_s),
-                                                status=status)
+    if contest["refills_num"] > 0:
+        if user["count_refills"] >= contest["refills_num"]:
+            status = "✅"
+        text += texts.conditions_refills.format(
+            num=contest["refills_num"],
+            refills=convert_words(contest["refills_num"], texts.refill_s),
+            status=status,
+        )
 
-    if contest['purchases_num'] > 0:
-        if len(await db.get_user_purchases(user['id'])) >= contest['purchases_num']:
-            status = '✅'
-        text += texts.conditions_purchases.format(num=contest['purchases_num'],
-                                                  purchases=convert_words(contest["purchases_num"],
-                                                                          texts.purchase_s),
-                                                  status=status)
+    if contest["purchases_num"] > 0:
+        if len(await db.get_user_purchases(user["id"])) >= contest["purchases_num"]:
+            status = "✅"
+        text += texts.conditions_purchases.format(
+            num=contest["purchases_num"],
+            purchases=convert_words(contest["purchases_num"], texts.purchase_s),
+            status=status,
+        )
 
-    if len(get_channels(contest['channels_ids'])) > 0:
-        urls_txt = ''
-        ids = get_channels(contest['channels_ids'])
+    if len(get_channels(contest["channels_ids"])) > 0:
+        urls_txt = ""
+        ids = get_channels(contest["channels_ids"])
 
         for c_id in ids:
-            user_status = await bot.get_chat_member(chat_id=c_id, user_id=call.from_user.id)
+            user_status = await bot.get_chat_member(
+                chat_id=c_id, user_id=call.from_user.id
+            )
             channel = await bot.get_chat(chat_id=c_id)
-            if user_status["status"] == 'left':
-                urls_txt += f"<a href='{channel['invite_link']}'>{channel['title']}</a> - ❌\n"
+            if user_status["status"] == "left":
+                urls_txt += (
+                    f"<a href='{channel['invite_link']}'>{channel['title']}</a> - ❌\n"
+                )
             else:
-                urls_txt += f"<a href='{channel['invite_link']}'>{channel['title']}</a> - ✅\n"
+                urls_txt += (
+                    f"<a href='{channel['invite_link']}'>{channel['title']}</a> - ✅\n"
+                )
 
-        text += "\n\n" + texts.conditions_channels.format(num=len(get_channels(contest['channels_ids'])),
-                                                          channels_text=convert_words(
-                                                              len(get_channels(contest['channels_ids'])),
-                                                              texts.channel_s
-                                                          ), channels=urls_txt)
+        text += "\n\n" + texts.conditions_channels.format(
+            num=len(get_channels(contest["channels_ids"])),
+            channels_text=convert_words(
+                len(get_channels(contest["channels_ids"])), texts.channel_s
+            ),
+            channels=urls_txt,
+        )
 
     if call.data.split(":")[0] == "contest_view":
-        if texts.contest_photo == '':
-            await call.message.edit_text(text, reply_markup=await contest_inl(texts, contest['id'], user))
+        if texts.contest_photo == "":
+            await call.message.edit_text(
+                text, reply_markup=await contest_inl(texts, contest["id"], user)
+            )
         else:
             await call.message.delete()
-            await call.message.answer_photo(photo=texts.contest_photo, caption=text,
-                                            reply_markup=await contest_inl(texts, contest['id'], user))
+            await call.message.answer_photo(
+                photo=texts.contest_photo,
+                caption=text,
+                reply_markup=await contest_inl(texts, contest["id"], user),
+            )
     else:
-        if texts.contest_photo == '':
-            await call.message.answer(text, reply_markup=await contest_inl(texts, contest['id'], user))
+        if texts.contest_photo == "":
+            await call.message.answer(
+                text, reply_markup=await contest_inl(texts, contest["id"], user)
+            )
         else:
-            await call.message.answer_photo(photo=texts.contest_photo, caption=text,
-                                            reply_markup=await contest_inl(texts, contest['id'], user))
+            await call.message.answer_photo(
+                photo=texts.contest_photo,
+                caption=text,
+                reply_markup=await contest_inl(texts, contest["id"], user),
+            )
 
 
 @dp.message_handler(text=lang_ru.faq, state="*")
@@ -808,16 +993,16 @@ async def faq_opens(message: Message, state: FSMContext):
     await state.finish()
     texts = await get_language(message.from_user.id)
     s = await db.get_settings()
-    faq = s['faq']
+    faq = s["faq"]
     if faq == "None" or faq == "-":
         faq = texts.no_faq_text
-    news = s['news']
-    chat = s['chat']
+    news = s["news"]
+    chat = s["chat"]
 
-    if s['chat'] == "-":
+    if s["chat"] == "-":
         chat = None
 
-    if s['news'] == "-":
+    if s["news"] == "-":
         news = None
 
     if news is None and chat is None:
@@ -845,7 +1030,7 @@ async def faq_opens(message: Message, state: FSMContext):
 
     s = await db.get_settings()
     texts = await get_language(message.from_user.id)
-    get_support = s['support']
+    get_support = s["support"]
     if get_support == "None" or get_support == "-":
         msg = texts.no_support
     else:
@@ -859,7 +1044,9 @@ async def faq_opens(message: Message, state: FSMContext):
     await message.delete()
 
     if texts.support_photo:
-        await message.answer_photo(photo=texts.support_photo, caption=msg, reply_markup=kb)
+        await message.answer_photo(
+            photo=texts.support_photo, caption=msg, reply_markup=kb
+        )
     else:
         await message.answer(msg, reply_markup=kb)
 
@@ -873,8 +1060,11 @@ async def refill_opens(message: Message, state: FSMContext):
     await message.delete()
 
     if texts.refill_photo:
-        await message.answer_photo(photo=texts.refill_photo, caption=texts.refill_text,
-                                   reply_markup=await refill_inl(texts))
+        await message.answer_photo(
+            photo=texts.refill_photo,
+            caption=texts.refill_text,
+            reply_markup=await refill_inl(texts),
+        )
     else:
         await message.answer(texts.refill_text, reply_markup=await refill_inl(texts))
 
@@ -890,31 +1080,43 @@ async def open_products_users(message: Message, state: FSMContext):
         await message.delete()
 
         if texts.products_photo:
-            await message.answer_photo(photo=texts.products_photo, caption=texts.no_cats,
-                                       reply_markup=back_to_user_menu(texts))
+            await message.answer_photo(
+                photo=texts.products_photo,
+                caption=texts.no_cats,
+                reply_markup=back_to_user_menu(texts),
+            )
         else:
             await message.answer(texts.no_cats, reply_markup=back_to_user_menu(texts))
     else:
         await message.delete()
         if texts.products_photo:
-            await message.answer_photo(photo=texts.products_photo, caption=texts.available_cats,
-                                       reply_markup=await open_products(texts))
+            await message.answer_photo(
+                photo=texts.products_photo,
+                caption=texts.available_cats,
+                reply_markup=await open_products(texts),
+            )
         else:
-            await message.answer(texts.available_cats, reply_markup=await open_products(texts))
+            await message.answer(
+                texts.available_cats, reply_markup=await open_products(texts)
+            )
 
 
-@dp.message_handler(IsAdmin(), commands=['admin', 'adm', 'a'], state="*")
+@dp.message_handler(IsAdmin(), commands=["admin", "adm", "a"], state="*")
 async def admin_menu_send(message: Message, state: FSMContext):
     await state.finish()
 
-    await message.answer("Добро пожаловать в меню Администратора", reply_markup=admin_menu())
+    await message.answer(
+        "Добро пожаловать в меню Администратора", reply_markup=admin_menu()
+    )
 
 
-@dp.message_handler(IsAdmin(), text='⚙️ Меню Администратора', state="*")
+@dp.message_handler(IsAdmin(), text="⚙️ Меню Администратора", state="*")
 async def admin_menu_send(message: Message, state: FSMContext):
     await state.finish()
 
-    await message.answer("Добро пожаловать в меню Администратора", reply_markup=admin_menu())
+    await message.answer(
+        "Добро пожаловать в меню Администратора", reply_markup=admin_menu()
+    )
 
 
 @dp.message_handler()
@@ -922,22 +1124,26 @@ async def pr_buttons1(msg: Message, state: FSMContext):
     pr_buttons = await db.get_all_pr_buttons()
     await state.finish()
     for button in pr_buttons:
-        if msg.text == button['name']:
-            if button['photo'] != '-':
-                await msg.answer_photo(photo=button['photo'], caption=button['txt'])
+        if msg.text == button["name"]:
+            if button["photo"] != "-":
+                await msg.answer_photo(photo=button["photo"], caption=button["txt"])
             else:
-                await msg.answer(button['txt'])
+                await msg.answer(button["txt"])
 
 
-@dp.callback_query_handler(text_startswith='pr_button_user:', state='*')
+@dp.callback_query_handler(text_startswith="pr_button_user:", state="*")
 async def pr_buttons2(call: CallbackQuery, state: FSMContext):
     await state.finish()
-    b_id = int(call.data.split(':')[1])
+    b_id = int(call.data.split(":")[1])
     btn = await db.get_pr_button(b_id)
     texts = await get_language(call.from_user.id)
-    if btn['photo'] == '-':
+    if btn["photo"] == "-":
         await call.message.delete()
-        await call.message.answer(btn['txt'], reply_markup=back_to_user_menu(texts))
+        await call.message.answer(btn["txt"], reply_markup=back_to_user_menu(texts))
     else:
         await call.message.delete()
-        await call.message.answer_photo(photo=btn['photo'], caption=btn['txt'], reply_markup=back_to_user_menu(texts))
+        await call.message.answer_photo(
+            photo=btn["photo"],
+            caption=btn["txt"],
+            reply_markup=back_to_user_menu(texts),
+        )
