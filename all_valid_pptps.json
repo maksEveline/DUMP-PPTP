@@ -81,21 +81,21 @@
         "city": "San Fernando",
         "subdivisions": "California",
         "postal_code": "91325",
-        "score": 4
+        "score": 5
     },
     "47.186.214.234": {
         "login_data": "admin:admin",
         "city": "Denton",
         "subdivisions": "Texas",
         "postal_code": "76203",
-        "score": 3
+        "score": 2
     },
     "47.187.131.183": {
         "login_data": "admin:admin",
         "city": "Highland Village",
         "subdivisions": "Texas",
         "postal_code": "75077",
-        "score": 10
+        "score": 13
     },
     "47.220.142.139": {
         "login_data": "admin:admin",
@@ -172,7 +172,7 @@
         "city": "Hot Springs",
         "subdivisions": "Arkansas",
         "postal_code": "71913",
-        "score": 2
+        "score": 5
     },
     "68.3.67.248": {
         "login_data": "admin:admin",
@@ -190,9 +190,9 @@
     },
     "184.103.164.12": {
         "login_data": "admin:admin",
-        "city": "Chandler",
+        "city": "Phoenix",
         "subdivisions": "Arizona",
-        "postal_code": "85246",
+        "postal_code": "85001",
         "score": 5
     },
     "174.85.172.221": {
@@ -281,24 +281,24 @@
     },
     "32.217.5.188": {
         "login_data": "admin:admin",
-        "city": "Webster",
-        "subdivisions": "Massachusetts",
-        "postal_code": "01570",
-        "score": 6
+        "city": "West Torrington",
+        "subdivisions": "Connecticut",
+        "postal_code": "06094",
+        "score": 5
     },
     "32.221.129.247": {
         "login_data": "admin:admin",
         "city": "Middletown",
         "subdivisions": "Connecticut",
         "postal_code": "06459",
-        "score": 6
+        "score": 7
     },
     "32.223.112.156": {
         "login_data": "admin:admin",
         "city": "Plainfield",
         "subdivisions": "Connecticut",
         "postal_code": "06374",
-        "score": 6
+        "score": 7
     },
     "35.143.141.26": {
         "login_data": "admin:admin",
@@ -326,27 +326,27 @@
         "city": "The Hammocks",
         "subdivisions": "Florida",
         "postal_code": "33196",
-        "score": 17
+        "score": 18
     },
     "73.14.186.3": {
         "login_data": "admin:admin",
         "city": "Thornton",
         "subdivisions": "Colorado",
         "postal_code": "80241",
-        "score": 17
+        "score": 18
     },
     "73.163.51.161": {
         "login_data": "admin:admin",
-        "city": "Dover",
-        "subdivisions": "Delaware",
-        "postal_code": "19905",
-        "score": 17
+        "city": "Indianapolis",
+        "subdivisions": "Indiana",
+        "postal_code": "46204",
+        "score": 18
     },
     "74.120.39.79": {
         "login_data": "admin:admin",
-        "city": "Enoch",
+        "city": "Cedar City",
         "subdivisions": "Utah",
-        "postal_code": "84772",
+        "postal_code": "84720",
         "score": 3
     },
     "76.155.175.249": {
@@ -403,7 +403,7 @@
         "city": "Hollywood",
         "subdivisions": "Florida",
         "postal_code": "33020",
-        "score": 18
+        "score": 19
     },
     "50.83.99.204": {
         "login_data": "admin:admin",
@@ -438,7 +438,7 @@
         "city": "Schaumburg",
         "subdivisions": "Illinois",
         "postal_code": "60159",
-        "score": 17
+        "score": 18
     },
     "12.188.6.62": {
         "login_data": "admin:admin",
@@ -446,5 +446,411 @@
         "subdivisions": "Illinois",
         "postal_code": "60159",
         "score": 0
+    },
+    "168.100.59.140": {
+        "login_data": "admin:admin",
+        "city": "Annville",
+        "subdivisions": "Kentucky",
+        "postal_code": "40402",
+        "score": 0
+    },
+    "23.226.174.163": {
+        "login_data": "admin:admin",
+        "city": "Annville",
+        "subdivisions": "Kentucky",
+        "postal_code": "40402",
+        "score": 0
+    },
+    "40.136.170.234": {
+        "login_data": "admin:admin",
+        "city": "Lexington",
+        "subdivisions": "Kentucky",
+        "postal_code": "40517",
+        "score": 3
+    },
+    "66.172.67.44": {
+        "login_data": "admin:admin",
+        "city": "Statesboro",
+        "subdivisions": "Georgia",
+        "postal_code": "30459",
+        "score": 7
+    },
+    "69.85.121.197": {
+        "login_data": "admin:admin",
+        "city": "Ellijay",
+        "subdivisions": "Georgia",
+        "postal_code": "30540",
+        "score": 1
+    },
+    "74.139.235.129": {
+        "login_data": "admin:admin",
+        "city": "Louisville",
+        "subdivisions": "Kentucky",
+        "postal_code": "40241",
+        "score": 4
+    },
+    "104.251.168.8": {
+        "login_data": "admin:admin",
+        "city": "Centerville",
+        "subdivisions": "Ohio",
+        "postal_code": "47330",
+        "score": 0
+    },
+    "131.241.56.222": {
+        "login_data": "admin:admin",
+        "city": "Centerville",
+        "subdivisions": "Ohio",
+        "postal_code": "47330",
+        "score": 2
+    },
+    "172.243.7.107": {
+        "login_data": "admin:admin",
+        "city": "SeaTac",
+        "subdivisions": "Washington",
+        "postal_code": "98158",
+        "score": 1
+    },
+    "174.49.23.100": {
+        "login_data": "admin:admin",
+        "city": "Winchester",
+        "subdivisions": "Tennessee",
+        "postal_code": "37398",
+        "score": 17
+    },
+    "208.102.106.241": {
+        "login_data": "admin:admin",
+        "city": "Cincinnati",
+        "subdivisions": "Ohio",
+        "postal_code": "45219",
+        "score": 0
+    },
+    "47.186.199.21": {
+        "login_data": "admin:admin",
+        "city": "Denton",
+        "subdivisions": "Texas",
+        "postal_code": "76203",
+        "score": 2
+    },
+    "65.24.62.45": {
+        "login_data": "admin:admin",
+        "city": "Sunbury",
+        "subdivisions": "Ohio",
+        "postal_code": "43074",
+        "score": 4
+    },
+    "67.147.33.209": {
+        "login_data": "admin:admin",
+        "city": "Howland Center",
+        "subdivisions": "Ohio",
+        "postal_code": "44484",
+        "score": 3
+    },
+    "67.161.93.121": {
+        "login_data": "admin:admin",
+        "city": "Seattle",
+        "subdivisions": "Washington",
+        "postal_code": "98101",
+        "score": 17
+    },
+    "67.171.56.52": {
+        "login_data": "admin:admin",
+        "city": "Spokane",
+        "subdivisions": "Washington",
+        "postal_code": "99201",
+        "score": 17
+    },
+    "69.24.230.248": {
+        "login_data": "admin:admin",
+        "city": "New Bremen",
+        "subdivisions": "Ohio",
+        "postal_code": "45869",
+        "score": 0
+    },
+    "73.140.27.35": {
+        "login_data": "admin:admin",
+        "city": "Auburn",
+        "subdivisions": "Washington",
+        "postal_code": "98071",
+        "score": 18
+    },
+    "73.169.141.115": {
+        "login_data": "admin:admin",
+        "city": "South Hill",
+        "subdivisions": "Washington",
+        "postal_code": "98374",
+        "score": 18
+    },
+    "76.121.235.100": {
+        "login_data": "admin:admin",
+        "city": "Seattle",
+        "subdivisions": "Washington",
+        "postal_code": "98101",
+        "score": 17
+    },
+    "172.100.9.157": {
+        "login_data": "admin:admin",
+        "city": "Buffalo",
+        "subdivisions": "New York",
+        "postal_code": "14204",
+        "score": 1
+    },
+    "74.76.72.191": {
+        "login_data": "admin:admin",
+        "city": "Albany",
+        "subdivisions": "New York",
+        "postal_code": "12203",
+        "score": 4
+    },
+    "65.78.90.225": {
+        "login_data": "admin:admin",
+        "city": "Allentown",
+        "subdivisions": "Pennsylvania",
+        "postal_code": "18105",
+        "score": 11
+    },
+    "70.44.132.176": {
+        "login_data": "admin:password",
+        "city": "Bethlehem",
+        "subdivisions": "Pennsylvania",
+        "postal_code": "18015",
+        "score": 15
+    },
+    "216.164.216.122": {
+        "login_data": "admin:admin",
+        "city": "Bethlehem",
+        "subdivisions": "Pennsylvania",
+        "postal_code": "18018",
+        "score": 11
+    },
+    "50.218.118.34": {
+        "login_data": "admin:admin",
+        "city": "Adrian",
+        "subdivisions": "Michigan",
+        "postal_code": "49221",
+        "score": 1
+    },
+    "64.82.139.146": {
+        "login_data": "admin:admin",
+        "city": "Starkville",
+        "subdivisions": "Mississippi",
+        "postal_code": "39759",
+        "score": 3
+    },
+    "24.148.110.106": {
+        "login_data": "admin:admin",
+        "city": "Ravena",
+        "subdivisions": "New York",
+        "postal_code": "12143",
+        "score": 8
+    },
+    "47.134.177.98": {
+        "login_data": "admin:admin",
+        "city": "Hickory",
+        "subdivisions": "North Carolina",
+        "postal_code": "28602",
+        "score": 4
+    },
+    "70.250.177.141": {
+        "login_data": "admin:admin",
+        "city": "Lake Charles",
+        "subdivisions": "Louisiana",
+        "postal_code": "70605",
+        "score": 16
+    },
+    "71.168.223.245": {
+        "login_data": "admin:admin",
+        "city": "Trenton",
+        "subdivisions": "New Jersey",
+        "postal_code": "08609",
+        "score": 1
+    },
+    "71.179.138.7": {
+        "login_data": "admin:admin",
+        "city": "Aberdeen",
+        "subdivisions": "Maryland",
+        "postal_code": "21001",
+        "score": 14
+    },
+    "72.227.153.153": {
+        "login_data": "admin:admin",
+        "city": "Corona",
+        "subdivisions": "New York",
+        "postal_code": "11355",
+        "score": 4
+    },
+    "174.168.29.222": {
+        "login_data": "admin:admin",
+        "city": "Watertown",
+        "subdivisions": "Massachusetts",
+        "postal_code": "02471",
+        "score": 1
+    },
+    "104.173.125.126": {
+        "login_data": "admin:admin",
+        "city": "Palmdale",
+        "subdivisions": "California",
+        "postal_code": "93551",
+        "score": 4
+    },
+    "38.191.1.53": {
+        "login_data": "admin:admin",
+        "city": "Huxley",
+        "subdivisions": "Iowa",
+        "postal_code": "50124",
+        "score": 0
+    },
+    "69.140.79.57": {
+        "login_data": "admin:admin",
+        "city": "Silver Spring",
+        "subdivisions": "Maryland",
+        "postal_code": "20907",
+        "score": 19
+    },
+    "24.189.76.158": {
+        "login_data": "admin:admin",
+        "city": "Boonton",
+        "subdivisions": "New Jersey",
+        "postal_code": "07005",
+        "score": 10
+    },
+    "68.175.93.51": {
+        "login_data": "admin:admin",
+        "city": "East Elmhurst",
+        "subdivisions": "New York",
+        "postal_code": "11370",
+        "score": 7
+    },
+    "24.102.83.169": {
+        "login_data": "admin:admin",
+        "city": "East Elmhurst",
+        "subdivisions": "New York",
+        "postal_code": "11370",
+        "score": 4
+    },
+    "108.26.204.129": {
+        "login_data": "admin:admin",
+        "city": "Newton",
+        "subdivisions": "Massachusetts",
+        "postal_code": "02458",
+        "score": 14
+    },
+    "98.127.101.184": {
+        "login_data": "admin:admin",
+        "city": "Great Falls",
+        "subdivisions": "Montana",
+        "postal_code": "59405",
+        "score": 4
+    },
+    "74.67.9.130": {
+        "login_data": "admin:admin",
+        "city": "Saratoga Springs",
+        "subdivisions": "New York",
+        "postal_code": "12866",
+        "score": 4
+    },
+    "67.251.133.169": {
+        "login_data": "admin:admin",
+        "city": "Walden",
+        "subdivisions": "New York",
+        "postal_code": "12586",
+        "score": 1
+    },
+    "207.199.235.110": {
+        "login_data": "admin:admin",
+        "city": "Mediapolis",
+        "subdivisions": "Iowa",
+        "postal_code": "52637",
+        "score": 0
+    },
+    "173.27.92.248": {
+        "login_data": "admin:admin",
+        "city": "Eagle Grove",
+        "subdivisions": "Iowa",
+        "postal_code": "50533",
+        "score": 1
+    },
+    "75.190.176.120": {
+        "login_data": "admin:admin",
+        "city": "Kings Mountain",
+        "subdivisions": "North Carolina",
+        "postal_code": "28086",
+        "score": 4
+    },
+    "98.172.188.201": {
+        "login_data": "admin:admin",
+        "city": "New Orleans",
+        "subdivisions": "Louisiana",
+        "postal_code": "70112",
+        "score": 15
+    },
+    "174.109.35.81": {
+        "login_data": "admin:admin",
+        "city": "Garner",
+        "subdivisions": "North Carolina",
+        "postal_code": "27529",
+        "score": 4
+    },
+    "174.86.11.124": {
+        "login_data": "admin:admin",
+        "city": "Oakville",
+        "subdivisions": "Missouri",
+        "postal_code": "63129",
+        "score": 4
+    },
+    "47.35.77.14": {
+        "login_data": "admin:admin",
+        "city": "Grand Haven",
+        "subdivisions": "Michigan",
+        "postal_code": "49417",
+        "score": 4
+    },
+    "206.85.140.178": {
+        "login_data": "admin:admin",
+        "city": "Taos",
+        "subdivisions": "New Mexico",
+        "postal_code": "87571",
+        "score": 9
+    },
+    "67.82.240.7": {
+        "login_data": "admin:admin",
+        "city": "New York City",
+        "subdivisions": "New York",
+        "postal_code": "10001",
+        "score": 10
+    },
+    "75.170.70.40": {
+        "login_data": "admin:admin",
+        "city": "Moyock",
+        "subdivisions": "North Carolina",
+        "postal_code": "27958",
+        "score": 3
+    },
+    "173.61.190.161": {
+        "login_data": "admin:admin",
+        "city": "Ewing",
+        "subdivisions": "New Jersey",
+        "postal_code": "08628",
+        "score": 1
+    },
+    "71.1.230.30": {
+        "login_data": "admin:admin",
+        "city": "Lehigh Acres",
+        "subdivisions": "Florida",
+        "postal_code": "33972",
+        "score": 7
+    },
+    "24.167.135.103": {
+        "login_data": "admin:admin",
+        "city": "Greensboro",
+        "subdivisions": "North Carolina",
+        "postal_code": "27405",
+        "score": 4
+    },
+    "173.47.109.111": {
+        "login_data": "admin:admin",
+        "city": "Joplin",
+        "subdivisions": "Missouri",
+        "postal_code": "64804",
+        "score": 7
     }
 }
