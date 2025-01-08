@@ -4,24 +4,31 @@ import random
 import aiohttp
 import asyncio
 
-from config import BASE_URL, US_STATES
+from config import BASE_URL, US_STATES, CHANNEL_ID
 from tgbot.data.config import db
 from tgbot.utils.utils_functions import get_unix
 from tgbot.services.db import get_date
 
 
-async def send_tg_notification(user_id: int, bot_token: str, pos: str):
+async def send_tg_notification(channel_id: str, bot_token: str, pos: str):
     url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-    payload = {"chat_id": user_id, "text": f"Добавленна новая позиция!\n{pos}"}
+    payload = {"chat_id": channel_id, "text": f"Добавлена новая позиция!\n{pos}"}
 
     async with aiohttp.ClientSession() as session:
         async with session.post(url, json=payload) as response:
             if response.status == 200:
-                print("Сообщение успешно отправлено")
+                print("Сообщение успешно отправлено в канал")
             else:
                 print(f"Ошибка при отправке сообщения: {response.status}")
                 response_text = await response.text()
                 print(f"Ответ сервера: {response_text}")
+
+
+def get_location_by_postal_code(data, postal_code):
+    for ip, details in data.items():
+        if details.get("postal_code") == postal_code:
+            return f"{details['subdivisions']} {details['city']}"
+    return None
 
 
 async def add_pptp_to_db(ip):
@@ -47,14 +54,6 @@ async def add_pptp_to_db(ip):
             cat_id = await db.get_category_id_by_name("🇺🇸 US PPTP")
             _type = "text"
 
-            # print(state_code)
-            # print(pod_cat_id)
-            # print(pos_id)
-            # print(name)
-            # print(description)
-            # print(date)
-            # print(cat_id)
-
             await db.add_position(
                 _type,
                 name,
@@ -70,11 +69,14 @@ async def add_pptp_to_db(ip):
             )
 
             print(f"Added position: {pos_id}")
+            answ_msg = f"Добавленна новая позиция!\n{ip_data["postal_code"]}, "
+
+            answ_msg += get_location_by_postal_code(data, str(ip_data["postal_code"]))
 
             await send_tg_notification(
                 bot_token="7889769392:AAH1FRBVmgaZcEDOae_Ukn5I5ss61AV71FA",
-                user_id=5210573930,
-                pos=name,
+                channel_id=CHANNEL_ID,
+                pos=answ_msg,
             )
 
             is_position = pos_id

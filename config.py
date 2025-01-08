@@ -1,4 +1,5 @@
 BASE_URL = "https://testevelinepptp-2883a7eddc25.herokuapp.com"
+CHANNEL_ID = -1002324464263
 
 US_STATES = {
     "Alabama": "AL",
