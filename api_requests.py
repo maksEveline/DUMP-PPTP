@@ -69,7 +69,7 @@ async def add_pptp_to_db(ip):
             )
 
             print(f"Added position: {pos_id}")
-            answ_msg = f"Добавленна новая позиция!\n{ip_data["postal_code"]}, "
+            answ_msg = f"Добавленна новая позиция!\n{ip_data['postal_code']}, "
 
             answ_msg += get_location_by_postal_code(data, str(ip_data["postal_code"]))
 
