@@ -27,7 +27,7 @@ async def send_tg_notification(channel_id: str, bot_token: str, pos: str):
 def get_location_by_postal_code(data, postal_code):
     for ip, details in data.items():
         if details.get("postal_code") == postal_code:
-            return f"{details['subdivisions']} {details['city']}"
+            return f"{details['subdivisions']}, {details['city']}"
     return None
 
 
