@@ -1,4 +1,4 @@
-BASE_URL = "https://testevelinepptp-2883a7eddc25.herokuapp.com"
+BASE_URL = "http://77.105.143.180:8000"
 CHANNEL_ID = -1002324464263
 
 US_STATES = {
