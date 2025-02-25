@@ -52,13 +52,13 @@ async def on_startup(dp: Dispatcher):
 
 # Выполнение функции после выключения бота
 async def on_shutdown(dp: Dispatcher):
-
     await dp.storage.close()
     await dp.storage.wait_closed()
     await (await dp.bot.get_session()).close()
 
 
 if __name__ == "__main__":
+
     scheduler.start()
     loop = asyncio.get_event_loop()
 

@@ -1,27 +1,30 @@
 import os
 import json
-import random
+import socket
 import aiohttp
-import asyncio
 
-from config import BASE_URL, US_STATES, CHANNEL_ID
+from config import BASE_URL, US_STATES
 from tgbot.data.config import db
 from tgbot.utils.utils_functions import get_unix
 from tgbot.services.db import get_date
+from tgbot.utils.json_utils import get_public_news_id
 
 
 async def send_tg_notification(channel_id: str, bot_token: str, pos: str):
-    url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
-    payload = {"chat_id": channel_id, "text": f"Добавлена новая позиция!\n{pos}"}
+    try:
+        url = f"https://api.telegram.org/bot{bot_token}/sendMessage"
+        payload = {"chat_id": channel_id, "text": f"Добавлена новая позиция!\n{pos}"}
 
-    async with aiohttp.ClientSession() as session:
-        async with session.post(url, json=payload) as response:
-            if response.status == 200:
-                print("Сообщение успешно отправлено в канал")
-            else:
-                print(f"Ошибка при отправке сообщения: {response.status}")
-                response_text = await response.text()
-                print(f"Ответ сервера: {response_text}")
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url, json=payload) as response:
+                if response.status == 200:
+                    print("Сообщение успешно отправлено в канал")
+                else:
+                    print(f"Ошибка при отправке сообщения: {response.status}")
+                    response_text = await response.text()
+                    print(f"Ответ сервера: {response_text}")
+    except Exception as ex:
+        print(f"Error while sending message: {ex}")
 
 
 def get_location_by_postal_code(data, postal_code):
@@ -73,9 +76,10 @@ async def add_pptp_to_db(ip):
 
             answ_msg += get_location_by_postal_code(data, str(ip_data["postal_code"]))
 
+            public_channel_id = get_public_news_id()
             await send_tg_notification(
                 bot_token="7889769392:AAH1FRBVmgaZcEDOae_Ukn5I5ss61AV71FA",
-                channel_id=CHANNEL_ID,
+                channel_id=public_channel_id,
                 pos=answ_msg,
             )
 
@@ -152,6 +156,18 @@ async def add_valid_pptps():
     print(need_to_add)
     for ip in need_to_add:
         await add_pptp_to_db(ip)
+
+
+def check_pptp(ip):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.settimeout(2)  # если в течении 2-х сек не будет ответ - прокси не ворк
+
+    try:
+        sock.connect((ip, 1723))
+        sock.close()
+        return True
+    except:
+        return False
 
 
 # if __name__ == "__main__":

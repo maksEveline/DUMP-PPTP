@@ -15,3 +15,8 @@ class UserProducts(StatesGroup):
 
 class SearchPositions(StatesGroup):
     query = State()
+
+
+class CheckIpProxy(StatesGroup):
+    ip = State()
+    accept_pay = State()

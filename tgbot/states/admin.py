@@ -82,3 +82,8 @@ class AdminPosEdit(StatesGroup):
 
 class AdminItemsEdit(StatesGroup):
     here_data_items = State()
+
+
+## EVELINE
+class ChangeNewsChannel(StatesGroup):
+    new_id = State()

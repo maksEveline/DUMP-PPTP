@@ -80,6 +80,8 @@ async def user_menu(texts, user_id):
                 )
             )
 
+        keyboard.add(InlineKeyboardButton("Check IP", callback_data="start_check_ip"))
+
         return keyboard
     else:
         keyboard = ReplyKeyboardMarkup(resize_keyboard=True)
@@ -265,6 +267,7 @@ def choose_asset_crypto(texts):
     kb.append(InlineKeyboardButton("ETH", callback_data=f"refill:crypto_bot:ETH"))
     kb.append(InlineKeyboardButton("USDC", callback_data=f"refill:crypto_bot:USDC"))
     kb.append(InlineKeyboardButton("TON", callback_data=f"refill:crypto_bot:TON"))
+    kb.append(InlineKeyboardButton("LTC", callback_data=f"refill:crypto_bot:LTC"))
     kb.append(InlineKeyboardButton(texts.back, callback_data=f"refill"))
 
     k.add(kb[0], kb[1], kb[2])
@@ -381,6 +384,15 @@ async def refill_inl(texts):
 def back_to_user_menu(texts):
     keyboard = InlineKeyboardMarkup()
 
+    keyboard.add(InlineKeyboardButton(texts.back, callback_data="back_to_user_menu"))
+
+    return keyboard
+
+
+def check_ip_menu(texts):
+    keyboard = InlineKeyboardMarkup()
+
+    keyboard.add(InlineKeyboardButton("pay 0.3$", callback_data="pay_check_ip"))
     keyboard.add(InlineKeyboardButton(texts.back, callback_data="back_to_user_menu"))
 
     return keyboard
